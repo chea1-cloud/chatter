@@ -1,12 +1,13 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-# Enable Apache rewrite module
-RUN a2enmod rewrite
+# Install any PHP extensions your app might need (like PDO or MySQLi)
+RUN docker-php-ext-install pdo pdo_mysql mysqli
 
-# Copy application files to the web server directory
-COPY . /var/www/html/
+# Set the working directory inside the container
+WORKDIR /var/www/html
 
-# Set permissions so PHP can write to the database and uploads folders
-RUN chown -R www-data:www-data /var/www/html
+# Copy all your project files into the container
+COPY . .
 
-EXPOSE 80
+# Tell Docker to start PHP's built-in web server on 0.0.0.0 and bind to Railway's dynamic $PORT
+CMD ["sh", "-c", "php -S 0.0.0.0:$PORT"]
