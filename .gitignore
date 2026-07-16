@@ -1,0 +1,10 @@
+# SQLite database — created automatically on first run, contains user data
+database/chatter.db
+
+# User-uploaded images
+uploads/*
+!uploads/.gitkeep
+
+# OS/editor cruft
+.DS_Store
+Thumbs.db
